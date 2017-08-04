@@ -43,16 +43,6 @@ func performanceTest(client *minio.Core, f *os.File, bucket, objectPrefix string
 		go uploadInLoop(client, f, int64(objSize), bucket, objectPrefix, i, ch)
 	}
 
-	ignoreCh := time.After(time.Minute)
-outerLoop:
-	for {
-		select {
-		case <-ch:
-			// Ignore
-		case <-ignoreCh:
-			break outerLoop
-		}
-	}
 	endCh := time.After(time.Duration(timeToRun))
 	var totalSize int64
 	objCount := 0
