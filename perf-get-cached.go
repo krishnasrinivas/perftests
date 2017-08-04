@@ -18,7 +18,20 @@ type transferUnit struct {
 }
 
 func usage() {
-	fmt.Println("perf <object-size-in-MB> <thread-count> <time-in-secs>")
+	fmt.Println(`
+perf-get-cached <object-size-in-MB> <thread-count> <time-in-secs>
+
+This test measures download bandwidth when the object is cached on the server side backend FS. i.e the test does not hit the backend disk.
+
+Ex. perf-get-cached 1024 20 60
+
+This example creates a bucket "testbucket" and uploads "testobject" of size 1024MB.
+The test then spawns 20 threads, each thread downloads "testobject" in a loop. The test runs for 60 seconds.
+Note that each thread downloads the object in full.
+
+The test is called "cached" test as the "testobject" is cached on the server side backend FS and hence the test
+does not hit the disk on the server side.
+`)
 	os.Exit(0)
 }
 

@@ -16,7 +16,21 @@ import (
 )
 
 func usage() {
-	fmt.Println("perf <object-size-in-MB> <parallel-upload-count>")
+	fmt.Println(`
+perf-get-uncached <object-size-in-MB> <parallel-download-count>
+
+This test measures download bandwidth when the objects are uncached on the server side backend FS. i.e the test hits the backend disk.
+
+Ex. perf-get-uncached 1024 20
+
+This test spawns 20 threads. Let's call the threads thread.0 thread.1 ... thread.19
+Now thread-0 downloads testobject.0, thread-1 downloads testobject.1 ... thread.19 downloads testobject.19
+
+Note that before running the test we need to create testobject.0, testobject.1 ... testobject.19 and run:
+"echo 3 > /proc/sys/vm/drop_caches" so that the server-side backend FS does not have any cached data.
+
+
+`)
 	fmt.Println(`Run "echo 3 > /proc/sys/vm/drop_caches" before running the test so that there is no cache-effect.`)
 	os.Exit(0)
 }

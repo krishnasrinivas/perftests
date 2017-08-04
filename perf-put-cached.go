@@ -16,7 +16,18 @@ import (
 )
 
 func usage() {
-	fmt.Println("perf <object-size-in-MB> <parallel-upload-count>")
+	fmt.Println(`
+perf-put-cached <object-size-in-MB> <parallel-upload-count>
+
+This test measures the upload bandwidth when the uploaded object is cached on the server side. i.e the test does not hit the disk.
+
+Ex. perf-put-cached 1024 10
+
+This test spawns 10 threads and each thread uploads an object of size 1024 MB.
+
+We need to make sure that the server side RAM is larger than 1024*10 (say 32G) so that the uploaded objects gets cached in the RAM and
+the tests do not hit the disks during the duration of the tests.
+`)
 	os.Exit(0)
 }
 

@@ -20,7 +20,18 @@ type transferUnit struct {
 }
 
 func usage() {
-	fmt.Println("perf <comma-seperated-object-sizes-in-MB> <thread-count> <time-in-secs>")
+	fmt.Println(`
+perf-put-uncached <comma-seperated-object-sizes-in-MB> <thread-count> <time-in-secs>
+
+This test is same as perf-put-cached but it is run for a longer duration (duration is specified as an argument to the test)
+i.e since the uploads are done for a longer duration the objects get written to the disk during the test.
+
+Ex. perf-put-cached 1024 10 60
+
+This test spawns 10 threads and each thread uploads an object of size 1024 MB. The test runs for 60 seconds.
+The tests fill up the server side backend FS memory cache and soon start hitting the disks.
+
+`)
 	fmt.Println("perf 2,8,32,128 20 180 ---> runs 4 tests, each test with different object size, with 20 threads for 180 seconds")
 	os.Exit(0)
 }
